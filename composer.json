@@ -1,0 +1,24 @@
+{
+    "name": "ziyoren/aigobophp",
+    "description": "爱购保旅游保险平台API V1.0",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Liao Jianshan",
+            "email": "asun@66580.cn"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "ziyoren\\": "src/",
+            "Test\\": "test/"
+        }
+    },
+    "require": {
+        "guzzlehttp/guzzle": "^7.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "9.5.x-dev"
+    }
+}
