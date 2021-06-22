@@ -7,6 +7,16 @@ use GuzzleHttp\Client as HttpClient;
 class AgbApi
 {
     protected $verion = '1.0';
+    protected $_config;
+    protected $_HOST;
+    protected $_distr_code;
+    protected $_employee_code;
+    protected $_invitate_code;
+    protected $_desKey;
+    protected $_md5Key;
+    protected $_accessToken;
+    protected $log = null;
+    protected $_ip = '';
 
     public function __construct($config = null, $logHandler=null)
     {
@@ -41,6 +51,19 @@ class AgbApi
         }
     }
 
+    public function setClientIp($ip)
+    {
+        $long = ip2long($ip);
+        if (false !== $long && $long > -1) {
+            $this->_ip = $ip;
+        }
+    }
+
+    public function getClientIp()
+    {
+        return empty($this->_ip) ? '127.0.0.1' : $this->_ip;
+    }
+
     public function getDistrCode()
     {
         return $this->_distr_code;
@@ -70,14 +93,13 @@ class AgbApi
         $requestBody = $this->getRequestBody($data);
         $params = [
             'accessToken' => $this->_accessToken,
-            'ip'          => '127.0.0.1',
+            'ip'          => $this->getClientIp(),
             'nonce'       => $nonce,
             'requestBody' => $requestBody,
             'sign'        => $sign,
             'timestamp'   => $this->msectime(),
             'version'     => $this->verion,
         ];
-        echo '完整报文: ', json_encode($params, 256), PHP_EOL, PHP_EOL;
         $client = new HttpClient();
         $apiUrl = $apiRequest->getApiUrl();
         $api_url = $this->_HOST. $apiUrl;
@@ -91,7 +113,6 @@ class AgbApi
         $responstContent = $res->getBody()->getContents();
         $rst = json_decode( $responstContent, true );
         $result = $rst ? $rst : [ 'code'=>0, 'message' => '远程服务器响应报文转换失败。', 'rawBody' => $responstContent ];
-        echo '服务器响应报文：', json_encode($result, 256), PHP_EOL, PHP_EOL;
         if ($this->log){
             $this->log->info($nonce . "\t" . $apiUrl, ['requestBody' => $data, 'params' => $params, 'result' => $result]);
         }
@@ -109,7 +130,6 @@ class AgbApi
     public function getRequestBody($params)
     {
         $jsonBody = json_encode($params, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
-        echo 'jsonBody: ', $jsonBody, PHP_EOL, PHP_EOL;
         return base64_encode( $this->encrypt_des_ecb($jsonBody, $this->_desKey) );
     }
 
@@ -135,7 +155,6 @@ class AgbApi
     private function generateSign($params)
     {
         $ptxt = $this->build_plaintext($params);
-        echo 'generateSign: ', $ptxt, PHP_EOL, PHP_EOL;
         $str = $ptxt . $this->_md5Key;
         return md5( md5( $str ) );
     }
