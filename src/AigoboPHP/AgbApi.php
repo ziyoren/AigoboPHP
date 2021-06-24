@@ -155,7 +155,6 @@ class AgbApi
     private function generateSign($params)
     {
         $ptxt = $this->build_plaintext($params);
-        echo '加签明文：', $ptxt, PHP_EOL, PHP_EOL;
         $str = $ptxt . $this->_md5Key;
         return md5( md5( $str ) );
     }
