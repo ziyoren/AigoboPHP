@@ -1,17 +1,23 @@
 <?php
-require_once './autoload.php';
+require_once __DIR__ . '/autoload.php';
 
 use ziyoren\AigoboPHP\AgbApi;
 use ziyoren\AigoboPHP\ProductDetail;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
 
-$config = require_once '../test/config.php';
+$loger  = new Logger('example');
+$streamHandler = new StreamHandler(dirname(__DIR__). '/logs/example-'. date('Y_m_d') .'.log', Logger::DEBUG);
+$loger->pushHandler( $streamHandler );
 
-$agbApi = new AgbApi($config);
+$config = require_once dirname(__DIR__) . '/test/config.php';
+
+$agbApi = new AgbApi($config, $loger);
 
 $pd = new ProductDetail();
 $pd->setParams(['productCode' => '200437', 'memberId'=> '107084']);
 $rst = $agbApi->execute($pd);
 
 echo '结果：', PHP_EOL;
-print_r($rst);
+echo apiResponse($rst);
 echo PHP_EOL;

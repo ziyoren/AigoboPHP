@@ -1,22 +1,31 @@
 <?php
-require_once './autoload.php';
+require_once __DIR__ . '/autoload.php';
 
 use ziyoren\AigoboPHP\AgbApi;
 use ziyoren\AigoboPHP\OrderDetail;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
 
-$config = require_once '../test/config.php';
+$loger  = new Logger('example');
+$streamHandler = new StreamHandler(dirname(__DIR__). '/logs/example-'. date('Y_m_d') .'.log', Logger::DEBUG);
+$loger->pushHandler( $streamHandler );
 
-$agbApi = new AgbApi($config);
+$config = require_once dirname(__DIR__) . '/test/config.php';
+
+$agbApi = new AgbApi($config, $loger);
 
 $oDetail = new OrderDetail();
 $data = [
     'distrCode' => $agbApi->getDistrCode(),
     'memberId'  => 107084,
-    'tempOrderCode' => 'TE2106212635000100',
+    // 'tempOrderCode' => '10102107121879001103',
+    'tempOrderCode' => '10102107131911000100',
+    // 'tempOrderCode' => '10102107134458000103',
+    // 'tempOrderCode' => '10102107138362000104',
 ];
 $oDetail->setParams($data);
 $rst = $agbApi->execute($oDetail);
 
 echo '结果：', PHP_EOL;
-print_r($rst);
+echo apiResponse($rst);
 echo PHP_EOL; 

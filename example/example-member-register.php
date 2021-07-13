@@ -1,12 +1,18 @@
 <?php
-require_once './autoload.php';
+require_once __DIR__ . '/autoload.php';
 
 use ziyoren\AigoboPHP\AgbApi;
 use ziyoren\AigoboPHP\MemberRegister;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
 
-$config = require_once '../test/config.php';
+$loger  = new Logger('example');
+$streamHandler = new StreamHandler(dirname(__DIR__). '/logs/example-'. date('Y_m_d') .'.log', Logger::DEBUG);
+$loger->pushHandler( $streamHandler );
 
-$agbApi = new AgbApi($config);
+$config = require_once dirname(__DIR__) . '/test/config.php';
+
+$agbApi = new AgbApi($config, $loger);
 
 $member = new MemberRegister();
 $data = [
@@ -24,5 +30,5 @@ $member->setParams($data);
 $rst = $agbApi->execute($member);
 
 echo '结果：', PHP_EOL;
-print_r($rst);
+echo apiResponse($rst);
 echo PHP_EOL;

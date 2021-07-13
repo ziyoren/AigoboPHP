@@ -25,5 +25,7 @@ class OrderTemp extends ApiRequest
         'returnPage'       => [true, 'String', 'http://www.66580.cn', '无', '返回页面地址', 60610],
         'holderInfo'       => [false, 'Array', '', '无', '投保人信息', 60611],
         'insuredInfoList'  => [false, 'Array', '', '无', '被保人信息', 60612],
+        'safeguardStartTime' => [false, 'Date', '格式：yyyy-MM-dd', '2021-06-28', '起保时间', 60613],
+        'safeguardEndTime'   => [false, 'Date', '格式：yyyy-MM-dd', '2021-06-28', '止保时间', 60614],
     ];
 }

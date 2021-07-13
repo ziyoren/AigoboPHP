@@ -6,6 +6,21 @@
 composer require ziyoren/aigobophp
 ```
 
+## 接口目录
+| 接口 | 接口地址 | 文件 |
+|-----|----|----|
+|7.1 注册渠道会员  | /api/member/register | MemberRegister.php |
+|7.2 开票         | /api/order/applyInvoice| ApplyInvoice.php |
+|7.3 获取发票地址  | /api/order/getInvoiceUrl| InvoiceUrl.php |
+|7.4下预订单      | /api/order/addTemp | OrderTemp.php |
+|7.5获取产品接口   | /api/product/getDistrProductDetail| ProductDetail.php |
+|7.6 获取保单保地址| /api/policy/getPolicyUrl| PolicyUrl.php |
+|7.7 第三方支付回调接口| /api/pay/outNotify | PayOutNotify.php |
+|7.8 获取订单列表接口 | /api/order/getOrderListUrl| OrderListUrl.php |
+|7.9根据保单号退保 | /api/policy/surrenderByPolicyCode | SurrenderByPolicyCode.php |
+|7.10 根据订单号退保 | /api/policy/surrenderByOrderCode | SurrenderByOrderCode.php | 
+|7.11 查询订单详情 | /api/order/getOrderDetail | OrderDetail.php | 
+
 ## 接口调用流程说明
 
 1、首先注册分销商侧会员----7.1注册渠道会员；
@@ -50,3 +65,4 @@ composer require ziyoren/aigobophp
     "success":true
 }
 ```
+

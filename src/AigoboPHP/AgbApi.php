@@ -3,6 +3,7 @@
 namespace ziyoren\AigoboPHP;
 
 use GuzzleHttp\Client as HttpClient;
+use Throwable;
 
 class AgbApi
 {
@@ -109,12 +110,19 @@ class AgbApi
             ],
             'json' => $params,
         ];
-        $res = $client->request('POST', $api_url, $repuestParams );
-        $responstContent = $res->getBody()->getContents();
-        $rst = json_decode( $responstContent, true );
-        $result = $rst ? $rst : [ 'code'=>0, 'message' => '远程服务器响应报文转换失败。', 'rawBody' => $responstContent ];
+        try{
+            $res = $client->request('POST', $api_url, $repuestParams );
+            $responstContent = $res->getBody()->getContents();
+            $rst = json_decode( $responstContent, true );
+            $result = $rst ? $rst : [ 'code'=>0, 'message' => '远程服务器响应报文转换失败。', 'rawBody' => $responstContent ];
+        }catch(Throwable $e){
+            $result = [
+                'code' => $e->getCode(),
+                'message' => $e->getMessage(),
+            ];
+        }
         if ($this->log){
-            $this->log->info($nonce . "\t" . $apiUrl, ['requestBody' => $data, 'params' => $params, 'result' => $result]);
+            $this->log->info($nonce . ' ' . $apiUrl, ['requestBody' => $data, 'params' => $params, 'result' => $result]);
         }
         return $result;
     }
@@ -131,6 +139,14 @@ class AgbApi
     {
         $jsonBody = json_encode($params, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
         return base64_encode( $this->encrypt_des_ecb($jsonBody, $this->_desKey) );
+    }
+
+
+    public function decrypt($ciphertext)
+    {
+        $o = $this->decrypt_des_ecb( base64_decode($ciphertext), $this->_desKey);
+        $json = json_decode( $o, true );
+        return $json ? $json : $o;
     }
 
 
