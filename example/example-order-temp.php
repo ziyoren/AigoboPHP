@@ -3,12 +3,6 @@ require_once __DIR__ . '/autoload.php';
 
 use ziyoren\AigoboPHP\AgbApi;
 use ziyoren\AigoboPHP\OrderTemp;
-use Monolog\Logger;
-use Monolog\Handler\StreamHandler;
-
-$loger  = new Logger('example');
-$streamHandler = new StreamHandler(dirname(__DIR__). '/logs/example-'. date('Y_m_d') .'.log', Logger::DEBUG);
-$loger->pushHandler( $streamHandler );
 
 $config = require_once dirname(__DIR__) . '/test/config.php';
 
@@ -16,7 +10,7 @@ $config = require_once dirname(__DIR__) . '/test/config.php';
 $agbApi = new AgbApi($config, $loger);
 
 $order = new OrderTemp();
-$outSerialNo = 'GP20218811000013';
+$outSerialNo = 'GP20218811000018';
 $data = [
     'distrCode'    => $agbApi->getDistrCode(),
     'mobile'       => '13588822260',
@@ -29,8 +23,8 @@ $data = [
     'returnNotifyUrl'  => 'http://office.ziyo.ren:9090/index/return',
     'refundNotifyUrl'  => 'http://office.ziyo.ren:9090/index/refund',
     'returnPage'       => 'http://office.ziyo.ren:9090/index/return_page?no=' . $outSerialNo,
-    'safeguardStartTime' => '2021-07-17',
-    'safeguardEndTime'   => '2021-07-17',
+    'safeguardStartTime' => '2021-07-18',
+    'safeguardEndTime'   => '2021-07-18',
     'holderInfo'       => [
         'holderName' => '廖建山',
         'holderCardType' => '1',

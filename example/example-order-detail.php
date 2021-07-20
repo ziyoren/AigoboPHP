@@ -3,12 +3,6 @@ require_once __DIR__ . '/autoload.php';
 
 use ziyoren\AigoboPHP\AgbApi;
 use ziyoren\AigoboPHP\OrderDetail;
-use Monolog\Logger;
-use Monolog\Handler\StreamHandler;
-
-$loger  = new Logger('example');
-$streamHandler = new StreamHandler(dirname(__DIR__). '/logs/example-'. date('Y_m_d') .'.log', Logger::DEBUG);
-$loger->pushHandler( $streamHandler );
 
 $config = require_once dirname(__DIR__) . '/test/config.php';
 

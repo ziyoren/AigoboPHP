@@ -47,21 +47,21 @@ composer require ziyoren/aigobophp
 ### 退保：
 ```json
 {
-    "memberId":"106225",
-    "tempOrderCode":"TE2104281199002104",
-    "policyCode":"837904323656500714",
-    "surrenderSuccess":true,
-    "errMsg":"退保成功"
+    "outSerialNo":"GP20218811000018",
+    "orderCode":"10112107157115003105",
+    "tempOrderCode":"10102107155232002102",
+    "policyCode":"20210715152546",
+    "success":true
 }
 ```
 
 ### 投保：
 ```json
 {
-    "outSerialNo":"2022",
-    "tempOrderCode":"DL999",
-    "orderCode":"23232",
-    "policyCode":"23324",
+    "outSerialNo":"GP20218811000018",
+    "tempOrderCode":"10102107155232002102",
+    "orderCode":"10112107157115003105",
+    "policyCode":"20210715152546",
     "success":true
 }
 ```
