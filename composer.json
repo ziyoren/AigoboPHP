@@ -15,10 +15,10 @@
         }
     },
     "require": {
-        "guzzlehttp/guzzle": "^7.3"
+        "guzzlehttp/guzzle": ">=6.5.5"
     },
     "require-dev": {
-        "monolog/monolog": "^2.3",
-        "phpunit/phpunit": "9.5.x-dev"
+        "monolog/monolog": ">=1.26.1",
+        "phpunit/phpunit": ">=5.7.27"
     }
 }
